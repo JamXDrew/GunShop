@@ -25,6 +25,10 @@ use pocketmine\nbt\tag\ByteTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\level\Level;
+use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\player\PlayerDeathEvent;
+use pocketmine\event\block\BlockBreakEvent;
+use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\utils\TextFormat as T;
 
 class Main extends PluginBase implements Listener{
@@ -71,7 +75,7 @@ class Main extends PluginBase implements Listener{
 	return $this->players[$player->getName()];
  	}
    
-    public function onJoin(\pocketmine\event\player\PlayerJoinEvent $e){
+    public function onJoin(PlayerJoinEvent $e){
 	$player = $e->getPlayer();
     $name = $player->getName(); 
     $config = new Config($this->getDataFolder()."Coin.yml", Config::YAML);
@@ -94,7 +98,7 @@ class Main extends PluginBase implements Listener{
     }
     }
    
-   public function onDeath(\pocketmine\event\player\PlayerDeathEvent $event){
+   public function onDeath(PlayerDeathEvent $event){
    $config = new Config($this->getDataFolder()."Coin.yml", Config::YAML);
    $prices = new Config($this->getDataFolder()."Prices.yml", Config::YAML);   
    if($event->getEntity()->getLastDamageCause()->getDamager() instanceof Player){
@@ -107,7 +111,7 @@ class Main extends PluginBase implements Listener{
    }
    }
    
-   public function onBreak(\pocketmine\event\block\BlockBreakEvent $e){
+   public function onBreak(BlockBreakEvent $e){
    $player = $e->getPlayer();
    $block = $e->getBlock();
    $config = new Config($this->getDataFolder()."Coin.yml", Config::YAML);
@@ -156,7 +160,7 @@ class Main extends PluginBase implements Listener{
    }
    }
 
-   public function onInteract(\pocketmine\event\player\PlayerInteractEvent $event){
+   public function onInteract(PlayerInteractEvent $event){
    $player = $event->getPlayer();
    $item = $event->getItem();
    $config = new Config($this->getDataFolder()."Coin.yml", Config::YAML);
